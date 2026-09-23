@@ -46,8 +46,17 @@ docker compose up -d postgres
 
 ```bash
 npm run migration:run
+npm run seed
 npm run start:dev
 ```
+
+Команда `npm run seed` добавляет небольшую демонстрационную выборку и безопасна для повторного запуска:
+
+- `demo_admin` — роль `admin`;
+- `demo_andrey` и `demo_maria` — роль `client`;
+- три заметки, три тега и четыре связи между ними.
+
+Пароли задаются через `SEED_ADMIN_PASSWORD` и `SEED_CLIENT_PASSWORD`. Значения из `.env.example` предназначены только для локальной разработки. Seed не удаляет и не перезаписывает существующие данные.
 
 Production-сборка и запуск:
 
@@ -64,6 +73,12 @@ docker compose up --build
 ```
 
 Контейнер backend ожидает готовности PostgreSQL, автоматически применяет миграции и запускается на `http://localhost:3000`.
+
+После запуска контейнеров демонстрационные данные можно добавить командой:
+
+```bash
+docker compose exec backend npm run seed:prod
+```
 
 ## API и Swagger
 
