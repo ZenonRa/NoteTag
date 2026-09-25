@@ -1,14 +1,15 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthController } from '../src/auth/auth.controller';
 import { AuthService } from '../src/auth/auth.service';
 
 describe('Auth API (e2e)', () => {
   let app: INestApplication;
   const authService = {
-    register: jest.fn(),
-    login: jest.fn(),
+    register: vi.fn(),
+    login: vi.fn(),
   };
 
   beforeAll(async () => {
@@ -20,11 +21,11 @@ describe('Auth API (e2e)', () => {
     app.useGlobalPipes(
       new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
     );
-    await app.init();
+    await app.listen(0, '127.0.0.1');
   });
 
   afterAll(async () => app.close());
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('POST /auth/register returns 201 and excludes password hash', async () => {
     authService.register.mockResolvedValue({ id: 1, login: 'andrey', role: 'client' });

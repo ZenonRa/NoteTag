@@ -10,7 +10,7 @@
 - JWT, Passport, bcrypt
 - class-validator / class-transformer
 - Swagger / OpenAPI
-- Jest, Docker и Docker Compose
+- Vitest, V8 Coverage, Docker и Docker Compose
 
 ## Структура
 
@@ -120,14 +120,33 @@ Swagger UI доступен по адресу [http://localhost:3000/api/docs](h
 
 ## Проверки
 
+Подробные команды запуска проекта и тестов собраны в
+[`docs/КОМАНДЫ_ЗАПУСКА.md`](docs/КОМАНДЫ_ЗАПУСКА.md).
+
 ```bash
 npm run lint
 npm run build
 npm run test
+npm run test:cov
 npm run test:e2e
+npm run test:db
+npm run test:all
 npm run frontend:lint
 npm run frontend:build
 ```
+
+`npm test` запускает быстрые изолированные unit-тесты backend и проверки чистых
+frontend-функций. `npm run test:cov` дополнительно строит отчёт покрытия и
+проверяет минимальные пороги: 95% statements, 80% branches, 95% functions и
+95% lines. HTTP e2e-тесты вынесены в `npm run test:e2e`, потому что они
+поднимают локальный NestJS-сервер.
+
+Интеграционная проверка ограничений PostgreSQL запускается отдельно. Сначала
+примените миграцию к изолированной тестовой базе, затем задайте при необходимости
+переменные `TEST_DB_HOST`, `TEST_DB_PORT`, `TEST_DB_USERNAME`,
+`TEST_DB_PASSWORD`, `TEST_DB_DATABASE` и выполните `npm run test:db`. По
+умолчанию тест ожидает локальную базу `notetag_acceptance` и выполняет каждый
+сценарий в транзакции с откатом.
 
 ## Миграции
 

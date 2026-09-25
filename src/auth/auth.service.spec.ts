@@ -1,6 +1,7 @@
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { UserRole } from '../common/enums/user-role.enum';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
@@ -8,16 +9,16 @@ import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   const usersService = {
-    createClient: jest.fn(),
-    findByLoginWithPassword: jest.fn(),
+    createClient: vi.fn(),
+    findByLoginWithPassword: vi.fn(),
   };
-  const jwtService = { signAsync: jest.fn() };
+  const jwtService = { signAsync: vi.fn() };
   const service = new AuthService(
     usersService as unknown as UsersService,
     jwtService as unknown as JwtService,
   );
 
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('registers a client with a bcrypt hash and never returns the hash', async () => {
     usersService.createClient.mockImplementation((login: string, passwordHash: string) =>
@@ -76,5 +77,14 @@ describe('AuthService', () => {
     await expect(
       service.login({ login: 'andrey', password: 'wrong-password' }),
     ).rejects.toBeInstanceOf(UnauthorizedException);
+  });
+
+  it('returns 401 when the login does not exist and does not sign a token', async () => {
+    usersService.findByLoginWithPassword.mockResolvedValue(null);
+
+    await expect(
+      service.login({ login: 'missing', password: 'password123' }),
+    ).rejects.toBeInstanceOf(UnauthorizedException);
+    expect(jwtService.signAsync).not.toHaveBeenCalled();
   });
 });
