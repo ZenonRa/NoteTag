@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "login": "ivanov",
+      "role": "client",
+      "createdAt": "2026-09-12",
+      "status": "active",
+      "notesCount": 24
+    },
+    {
+      "id": 2,
+      "login": "petrova",
+      "role": "client",
+      "createdAt": "2026-09-05",
+      "status": "active",
+      "notesCount": 8
+    },
+    {
+      "id": 3,
+      "login": "admin",
+      "role": "admin",
+      "createdAt": "2026-08-01",
+      "status": "active",
+      "notesCount": 0
+    }
+  ],
+  "tags": [
+    { "id": 1, "name": "работа" },
+    { "id": 2, "name": "идеи" },
+    { "id": 3, "name": "книги" },
+    { "id": 4, "name": "учёба" },
+    { "id": 5, "name": "личное" }
+  ],
+  "notes": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "Список книг на лето",
+      "content": "Прочитать: 1984, Мастер и Маргарита, Война и мир, Преступление и наказание",
+      "tags": [3, 4],
+      "createdAt": "2026-09-10T10:00:00",
+      "updatedAt": "2026-09-12T14:30:00"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "title": "Идеи для пет-проекта",
+      "content": "Трекер привычек, приложение для заметок, агрегатор курсов",
+      "tags": [2],
+      "createdAt": "2026-09-11T09:15:00",
+      "updatedAt": "2026-09-11T09:15:00"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "title": "Созвон с командой",
+      "content": "Обсудили ТЗ, распределили роли, дедлайн — 3 октября",
+      "tags": [1],
+      "createdAt": "2026-09-12T11:00:00",
+      "updatedAt": "2026-09-12T11:00:00"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "title": "Конспект по React",
+      "content": "useState, useEffect, useContext, useMemo, useCallback. Разница между props и state.",
+      "tags": [4],
+      "createdAt": "2026-09-13T16:00:00",
+      "updatedAt": "2026-09-13T16:00:00"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "title": "Купить продукты",
+      "content": "Молоко, хлеб, яйца, сыр, помидоры, огурцы",
+      "tags": [5],
+      "createdAt": "2026-09-14T08:00:00",
+      "updatedAt": "2026-09-14T08:00:00"
+    }
+  ]
+}
