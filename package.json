@@ -20,7 +20,11 @@
     "migration:revert": "npm run typeorm -- -d src/database/data-source.ts migration:revert",
     "migration:run:prod": "node ./node_modules/typeorm/cli.js -d dist/database/data-source.js migration:run",
     "seed": "ts-node -r tsconfig-paths/register src/database/seeds/seed.ts",
-    "seed:prod": "node dist/database/seeds/seed.js"
+    "seed:prod": "node dist/database/seeds/seed.js",
+    "frontend:install": "npm --prefix frontend ci",
+    "frontend:start": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "frontend:lint": "npm --prefix frontend run lint"
   },
   "dependencies": {
     "@nestjs/common": "^11.2.6",

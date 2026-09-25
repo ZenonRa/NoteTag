@@ -1,9 +1,10 @@
-# NoteTag Backend
+# NoteTag
 
-REST API учебного приложения для личных текстовых заметок и их организации с помощью тегов. Клиент работает только со своими заметками и тегами; администратор видит список пользователей и общую статистику.
+Полный учебный проект для создания личных текстовых заметок и их организации с помощью тегов. React-интерфейс работает с NestJS REST API; клиент видит только свои данные, а администратор — список пользователей и общую статистику.
 
 ## Стек
 
+- React, Vite, React Router, Axios
 - Node.js, NestJS, TypeScript
 - PostgreSQL, TypeORM и миграции
 - JWT, Passport, bcrypt
@@ -11,19 +12,27 @@ REST API учебного приложения для личных тексто�
 - Swagger / OpenAPI
 - Jest, Docker и Docker Compose
 
+## Структура
+
+- `frontend/` — React/Vite приложение;
+- `src/` — NestJS backend;
+- `sql/` — учебные SQL-запросы;
+- `docker-compose.yml` — PostgreSQL, backend и frontend.
+
 ## Требования
 
-- Node.js 20+
+- Node.js 22+
 - npm 10+
 - PostgreSQL 16+ для локального запуска либо Docker с Docker Compose
 
 ## Локальная установка
 
 ```bash
-npm install
+npm ci
+npm run frontend:install
 ```
 
-Скопируйте `.env.example` в `.env` и обязательно замените `JWT_SECRET`. Файл `.env` исключён из Git.
+Скопируйте корневой `.env.example` в `.env`, `frontend/.env.example` в `frontend/.env` и обязательно замените `JWT_SECRET`. Оба `.env` исключены из Git.
 
 ```env
 PORT=3000
@@ -50,6 +59,14 @@ npm run seed
 npm run start:dev
 ```
 
+Во втором терминале запустите frontend:
+
+```bash
+npm run frontend:start
+```
+
+Frontend будет доступен на `http://localhost:5173`, backend — на `http://localhost:3000`.
+
 Команда `npm run seed` добавляет небольшую демонстрационную выборку и безопасна для повторного запуска:
 
 - `demo_admin` — роль `admin`;
@@ -72,7 +89,14 @@ npm run start:prod
 docker compose up --build
 ```
 
-Контейнер backend ожидает готовности PostgreSQL, автоматически применяет миграции и запускается на `http://localhost:3000`.
+Compose поднимает весь проект:
+
+- frontend — `http://localhost:5173`;
+- backend — `http://localhost:3000`;
+- Swagger — `http://localhost:3000/api/docs`;
+- PostgreSQL — порт `5432`.
+
+Backend ожидает готовности PostgreSQL и автоматически применяет миграции. Frontend собирается в production-режиме и раздаётся через Nginx.
 
 После запуска контейнеров демонстрационные данные можно добавить командой:
 
@@ -101,6 +125,8 @@ npm run lint
 npm run build
 npm run test
 npm run test:e2e
+npm run frontend:lint
+npm run frontend:build
 ```
 
 ## Миграции

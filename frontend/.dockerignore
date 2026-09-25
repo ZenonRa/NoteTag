@@ -1,7 +1,4 @@
 node_modules
 dist
-coverage
-.git
 .env
 *.log
-frontend
