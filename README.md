@@ -111,3 +111,23 @@ npm run migration:revert
 ```
 
 В конфигурации TypeORM установлено `synchronize: false`. Схема создаётся только миграцией: `users`, `notes`, `tags`, `note_tags`, включая уникальные ограничения, внешние ключи и `ON DELETE CASCADE`.
+
+## Учебные SELECT-запросы
+
+В файле `sql/select-queries.sql` находятся три самостоятельных запроса:
+
+1. список пользователей без хешей паролей;
+2. заметки демонстрационного пользователя вместе с тегами;
+3. общая статистика количества пользователей, заметок и тегов.
+
+После применения миграции и seed их можно выполнить локально через PostgreSQL:
+
+```bash
+psql -U postgres -d notetag -f sql/select-queries.sql
+```
+
+Из PowerShell при запущенном Docker Compose:
+
+```powershell
+Get-Content sql/select-queries.sql | docker compose exec -T postgres psql -U postgres -d notetag
+```
